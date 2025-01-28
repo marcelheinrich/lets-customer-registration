@@ -1,0 +1,109 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Resources:
+  CustomersTable:
+  Type: AWS::DynamoDB::Table
+  Properties:
+    TableName: Customers
+    AttributeDefinitions:
+      - AttributeName: id
+        AttributeType: S
+      - AttributeName: document
+        AttributeType: S
+    KeySchema:
+      - AttributeName: id
+        KeyType: HASH
+    ProvisionedThroughput:
+      ReadCapacityUnits: 5
+      WriteCapacityUnits: 5
+    GlobalSecondaryIndexes:
+      - IndexName: DocumentIndex
+        KeySchema:
+          - AttributeName: document
+            KeyType: HASH
+        Projection:
+          ProjectionType: ALL
+        ProvisionedThroughput:
+          ReadCapacityUnits: 5
+          WriteCapacityUnits: 5
+
+    CustomersLambda:
+      Type: AWS::Lambda::Function
+      Properties:
+        FunctionName: CustomersHandler
+        Handler: index.handler
+        Runtime: nodejs22.x
+        Environment:
+          Variables:
+            IS_OFFLINE: "true"
+        Role:
+          Fn::GetAtt: [LambdaExecutionRole, Arn]
+
+    LambdaExecutionRole:
+      Type: AWS::IAM::Role
+      Properties:
+        RoleName: LambdaExecutionRole
+        AssumeRolePolicyDocument:
+          Version: "2012-10-17"
+          Statement:
+            - Effect: Allow
+              Principal:
+                Service:
+                  - lambda.amazonaws.com
+              Action:
+                - sts:AssumeRole
+        Policies:
+          - PolicyName: DynamoDBAccessPolicy
+            PolicyDocument:
+              Version: "2012-10-17"
+              Statement:
+                - Effect: Allow
+                  Action:
+                    - dynamodb:*
+                  Resource:
+                    - Fn::GetAtt: [CustomersTable, Arn]
+
+    ApiGatewayRestApi:
+      Type: AWS::ApiGateway::RestApi
+      Properties:
+        Name: CustomersApi
+
+    ApiGatewayResourceCustomers:
+      Type: AWS::ApiGateway::Resource
+      Properties:
+        ParentId:
+          Fn::GetAtt: [ApiGatewayRestApi, RootResourceId]
+        PathPart: customers
+        RestApiId:
+          Ref: ApiGatewayRestApi
+
+    ApiGatewayMethodCustomers:
+      Type: AWS::ApiGateway::Method
+      Properties:
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        ResourceId:
+          Ref: ApiGatewayResourceCustomers
+        HttpMethod: ANY
+        AuthorizationType: NONE
+        Integration:
+          Type: AWS_PROXY
+          IntegrationHttpMethod: POST
+          Uri:
+            Fn::Sub:
+              - arn:aws:apigateway:${AWS::Region}:lambda:path/2015-03-31/functions/${LambdaArn}/invocations
+              - LambdaArn:
+                  Fn::GetAtt: [CustomersLambda, Arn]
+
+    ApiGatewayDeployment:
+      Type: AWS::ApiGateway::Deployment
+      Properties:
+        RestApiId:
+          Ref: ApiGatewayRestApi
+        StageName: dev
+      DependsOn:
+        - ApiGatewayMethodCustomers
+
+Outputs:
+  ApiUrl:
+    Value:
+      Fn::Sub: "https://${ApiGatewayRestApi}.execute-api.${AWS::Region}.amazonaws.com/dev/customers"

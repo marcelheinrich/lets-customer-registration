@@ -1,0 +1,8 @@
+{
+    "httpMethod": "PUT",
+    "body": "{\"status\": \"ACTIVE\", \"addresses\": [{\"street\": \"123 Main St\", \"number\": \"45\", \"neighborhood\": \"Downtown\", \"city\": \"Cityville\", \"state\": \"ST\", \"postalCode\": \"12345\"}], \"contacts\": [{\"phone\": \"555-1234\", \"email\": \"contact@example.com\", \"isMain\": true}]}",
+    "pathParameters": {
+        "id": "2"
+    },
+    "queryStringParameters": {}
+}

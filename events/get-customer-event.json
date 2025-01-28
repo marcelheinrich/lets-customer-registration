@@ -1,0 +1,6 @@
+{
+  "httpMethod": "GET",
+  "body": null,
+  "pathParameters": { "id": "3b5d654c-3ad6-4158-8b02-64cb4f98b272" },
+  "queryStringParameters": {}
+}
