@@ -10,6 +10,12 @@ Este projeto utiliza o Docker para rodar uma instância local de banco de dados 
 
 ## Como usar
 
+## Instalar as dependências do projeto.
+
+```
+	npm install
+```
+
 1. **Iniciar o Docker** : O primeiro passo é iniciar os containers do Docker, que irão rodar os serviços necessários para o banco de dados ou outras dependências. Use o script abaixo para iniciar o Docker.
 
 ```
