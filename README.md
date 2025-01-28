@@ -21,7 +21,9 @@ Este comando irá executar o `docker-compose` para iniciar os containers em segu
 
 1. **Escolher a função a ser executada** : Após iniciar o Docker, você pode escolher um dos seguintes métodos para rodar as funções de teste. Use um dos comandos abaixo dependendo do evento que você deseja simular:
 
-- # **Criar um cliente** :
+- #A requisição para cada um dos itens abaixo é configurada na pasta events. Lá você pode ajustar os dados que deseja.
+
+- **Criar um cliente** :
 
   ```
   npm run start:post
