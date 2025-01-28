@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1738086702713" clover="3.2.0">
-  <project timestamp="1738086702713" name="All files">
+<coverage generated="1738089855740" clover="3.2.0">
+  <project timestamp="1738089855740" name="All files">
     <metrics statements="192" coveredstatements="189" conditionals="106" coveredconditionals="87" methods="31" coveredmethods="31" elements="329" coveredelements="307" complexity="0" loc="192" ncloc="192" packages="5" files="9" classes="9"/>
     <package name="domain.enums">
       <metrics statements="10" coveredstatements="10" conditionals="4" coveredconditionals="4" methods="2" coveredmethods="2"/>

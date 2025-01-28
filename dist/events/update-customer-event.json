@@ -2,7 +2,7 @@
     "httpMethod": "PUT",
     "body": "{\"status\": \"ACTIVE\", \"addresses\": [{\"street\": \"123 Main St\", \"number\": \"45\", \"neighborhood\": \"Downtown\", \"city\": \"Cityville\", \"state\": \"ST\", \"postalCode\": \"12345\"}], \"contacts\": [{\"phone\": \"555-1234\", \"email\": \"contact@example.com\", \"isMain\": true}]}",
     "pathParameters": {
-        "id": "2"
+        "id": "3b5d654c-3ad6-4158-8b02-64cb4f98b272"
     },
     "queryStringParameters": {}
 }

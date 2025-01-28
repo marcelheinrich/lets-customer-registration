@@ -111,6 +111,7 @@ class DynamoCustomerRepository {
         const now = new Date().toISOString();
         const id = (_a = data.id) !== null && _a !== void 0 ? _a : (0, crypto_1.randomUUID)();
         Object.assign(data, {
+            isDeleted: false,
             createdAt: now,
             updatedAt: now,
             id,
@@ -172,7 +173,7 @@ class DynamoCustomerRepository {
     }
     mapCustomerResponse(item) {
         var _a, _b, _c, _d, _e, _f, _g, _h, _j, _k;
-        const addresses = (_b = (_a = item === null || item === void 0 ? void 0 : item.addressess) === null || _a === void 0 ? void 0 : _a.L) === null || _b === void 0 ? void 0 : _b.map((address) => {
+        const addresses = (_b = (_a = item === null || item === void 0 ? void 0 : item.addresses) === null || _a === void 0 ? void 0 : _a.L) === null || _b === void 0 ? void 0 : _b.map((address) => {
             return address.M ? (0, util_dynamodb_1.unmarshall)(address.M) : [];
         });
         const contacts = (_d = (_c = item === null || item === void 0 ? void 0 : item.contacts) === null || _c === void 0 ? void 0 : _c.L) === null || _d === void 0 ? void 0 : _d.map((contact) => {

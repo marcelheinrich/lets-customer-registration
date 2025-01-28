@@ -9,11 +9,12 @@
     "docker:start": "docker compose up -d",
     "setup:db": "node dist/local/setup.js",
     "reset:db": "docker compose down -v",
-    "start:post": "npm run build && cross-env EVENT_TYPE=create && node dist/src/test-local.js",
-    "start:list": "npm run build && cross-env EVENT_TYPE=list && node dist/src/test-local.js",
-    "start:get": "npm run build && cross-env EVENT_TYPE=get && node dist/src/test-local.js",
-    "start:update": "npm run build && cross-env EVENT_TYPE=update && node dist/src/test-local.js",
-    "start:delete": "npm run build && cross-env EVENT_TYPE=delete && node dist/src/test-local.js"
+    "start": "npm run build && node dist/src/test-local.js",
+    "start:post": "cross-env EVENT_TYPE=create npm run start",
+    "start:list": "cross-env EVENT_TYPE=list npm run start",
+    "start:get": "cross-env EVENT_TYPE=get npm run start",
+    "start:update": "cross-env EVENT_TYPE=update npm run start",
+    "start:delete": "cross-env EVENT_TYPE=delete npm run start"
   },
   "author": "",
   "license": "ISC",

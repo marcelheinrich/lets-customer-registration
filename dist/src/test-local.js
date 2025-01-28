@@ -37,6 +37,8 @@ const index_1 = require("./index");
 const createCustomerMock = __importStar(require("../events/create-customer-event.json"));
 const listCustomersMock = __importStar(require("../events/list-customers-event.json"));
 const updateCustomersMock = __importStar(require("../events/update-customer-event.json"));
+const getCustomerMock = __importStar(require("../events/get-customer-event.json"));
+const deleteCustomerMock = __importStar(require("../events/delete-customer-event.json"));
 const setup_1 = require("../local/setup");
 var EventType;
 (function (EventType) {
@@ -48,6 +50,7 @@ var EventType;
 })(EventType || (EventType = {}));
 class LocalTest {
     async execute() {
+        console.log({ process: process.env });
         const eventType = process.env.EVENT_TYPE || EventType.LIST;
         const mockContext = {
             callbackWaitsForEmptyEventLoop: false,
@@ -72,10 +75,17 @@ class LocalTest {
             case EventType.UPDATE:
                 eventMock = updateCustomersMock;
                 break;
+            case EventType.GET:
+                eventMock = getCustomerMock;
+                break;
+            case EventType.DELETE:
+                eventMock = deleteCustomerMock;
+                break;
             case EventType.LIST:
-            default:
                 eventMock = listCustomersMock;
                 break;
+            default:
+                throw new Error('Method not implemented');
         }
         await (0, index_1.handler)(eventMock, mockContext, () => { });
     }
