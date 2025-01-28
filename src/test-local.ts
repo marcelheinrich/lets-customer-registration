@@ -17,7 +17,6 @@ enum EventType {
 
 class LocalTest {
   async execute() {
-    console.log({ process: process.env })
 
     const eventType: EventType =
       (process.env.EVENT_TYPE as EventType) || EventType.LIST;
